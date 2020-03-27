@@ -7,6 +7,8 @@ import slick.dbio.DBIOAction
 import akka.Done
 import com.example.shoppingcart.impl.ShoppingCart._
 
+import scala.util.Random
+
 class ShoppingCartReportProcessor(readSide: SlickReadSide, repository: ShoppingCartReportRepository)
     extends ReadSideProcessor[Event] {
 
@@ -24,6 +26,8 @@ class ShoppingCartReportProcessor(readSide: SlickReadSide, repository: ShoppingC
         DBIOAction.successful(Done) // not used in report
       }
       .setEventHandler[CartCheckedOut] { envelope =>
+        // This random failure comes in handy to tests projection telemetry
+        if (Random.nextInt(5) == 0) throw new RuntimeException("Sometimes event handling a checkout fails.")
         repository.addCheckoutTime(envelope.entityId, envelope.event.eventTime)
       }
       .build()

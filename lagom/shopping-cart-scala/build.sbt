@@ -27,7 +27,12 @@ val cinnamonSettings = Seq(
   libraryDependencies ++= Seq(
     // Use Coda Hale Metrics and Lagom instrumentation
     Cinnamon.library.cinnamonCHMetrics,
-    Cinnamon.library.cinnamonLagom
+    Cinnamon.library.cinnamonLagom,
+    Cinnamon.library.cinnamonLagomProjection,
+    // Uncomment if you are using the Prometheus backend.
+    // See https://developer.lightbend.com/docs/telemetry/current/sandbox/prometheus-sandbox.html
+    //  Cinnamon.library.cinnamonPrometheus,
+    //  Cinnamon.library.cinnamonPrometheusHttpServer
   )
 )
 
