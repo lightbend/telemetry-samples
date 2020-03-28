@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.util.Random;
 
 public class ShoppingCartReportProcessor extends ReadSideProcessor<ShoppingCartEntity.Event> {
 
@@ -45,8 +46,14 @@ public class ShoppingCartReportProcessor extends ReadSideProcessor<ShoppingCartE
         }
     }
 
+    Random random = new Random();
+
     private void addCheckoutTime(EntityManager entityManager, ShoppingCartEntity.CheckedOut evt) {
         ShoppingCartReport report = findReport(entityManager, evt.shoppingCartId);
+
+        // This random failure comes in handy to tests projection telemetry
+        if (random.nextInt(5) == 0)
+            throw new RuntimeException("Sometimes event handling a checkout fails.");
 
         logger.debug("Received CheckedOut event: " + evt);
         if (report != null) {
