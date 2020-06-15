@@ -9,19 +9,19 @@ scalaVersion in ThisBuild := "2.13.1"
 version in ThisBuild ~= (_.replace('+', '-'))
 dynver in ThisBuild ~= (_.replace('+', '-'))
 
-val lombok                 = "org.projectlombok"               % "lombok"                  % "1.18.8"
-val postgresDriver         = "org.postgresql"                  % "postgresql"              % "42.2.8"
-val hamcrestLibrary        = "org.hamcrest"                    % "hamcrest-library"        % "2.1" % Test
-val hibernateEntityManager = "org.hibernate"                   % "hibernate-entitymanager" % "5.4.2.Final"
-val jpaApi                 = "org.hibernate.javax.persistence" % "hibernate-jpa-2.1-api"   % "1.0.0.Final"
-val validationApi          = "javax.validation"                % "validation-api"          % "1.1.0.Final"
+val lombok = "org.projectlombok" % "lombok" % "1.18.8"
+val postgresDriver = "org.postgresql" % "postgresql" % "42.2.8"
+val hamcrestLibrary = "org.hamcrest" % "hamcrest-library" % "2.1" % Test
+val hibernateEntityManager = "org.hibernate" % "hibernate-entitymanager" % "5.4.2.Final"
+val jpaApi = "org.hibernate.javax.persistence" % "hibernate-jpa-2.1-api" % "1.0.0.Final"
+val validationApi = "javax.validation" % "validation-api" % "1.1.0.Final"
 
 val akkaPersistenceQuery = "com.typesafe.akka" %% "akka-persistence-query" % LagomVersion.akka
 val akkaStreamTestkit    = "com.typesafe.akka" %% "akka-stream-testkit"    % LagomVersion.akka
 
 val akkaManagementVersion = "1.0.3"
-val akkaDiscoveryKubernetesApi = "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api"                % akkaManagementVersion
-val lagomJavadslAkkaDiscovery  = "com.lightbend.lagom"          %% "lagom-javadsl-akka-discovery-service-locator" % LagomVersion.current
+val akkaDiscoveryKubernetesApi = "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api" % akkaManagementVersion
+val lagomJavadslAkkaDiscovery = "com.lightbend.lagom" %% "lagom-javadsl-akka-discovery-service-locator" % LagomVersion.current
 
 val playJavaClusterSharding = "com.typesafe.play" %% "play-java-cluster-sharding" % LagomVersion.play
 
@@ -30,12 +30,7 @@ lazy val `shopping-cart-java` = (project in file("."))
 
 lazy val `shopping-cart-api` = (project in file("shopping-cart-api"))
   .settings(common)
-  .settings(
-    libraryDependencies ++= Seq(
-      lagomJavadslApi,
-      lombok
-    )
-  )
+  .settings(libraryDependencies ++= Seq(lagomJavadslApi, lombok))
 
 lazy val `shopping-cart` = (project in file("shopping-cart"))
   .enablePlugins(LagomJava, Cinnamon)
@@ -65,11 +60,7 @@ lazy val `shopping-cart` = (project in file("shopping-cart"))
 
 lazy val `inventory-api` = (project in file("inventory-api"))
   .settings(common)
-  .settings(
-    libraryDependencies ++= Seq(
-      lagomJavadslApi
-    )
-  )
+  .settings(libraryDependencies ++= Seq(lagomJavadslApi))
 
 lazy val inventory = (project in file("inventory"))
   .enablePlugins(LagomJava, Cinnamon)
@@ -90,7 +81,15 @@ def common = Seq(
   // We don't care about doc artifacts here.
   sources in (Compile, doc) := Seq.empty,
   publishArtifact in (Compile, packageDoc) := false,
-  javacOptions in Compile := Seq("-g", "-encoding", "UTF-8", "-Xlint:unchecked", "-Xlint:deprecation", "-parameters", "-Werror")
+  javacOptions in Compile := Seq(
+    "-g",
+    "-encoding",
+    "UTF-8",
+    "-Xlint:unchecked",
+    "-Xlint:deprecation",
+    "-parameters",
+    "-Werror"
+  )
 )
 
 // Lightbend Telemetry basic configuration. See more at:
@@ -104,8 +103,8 @@ val cinnamonSettings = Seq(
     Cinnamon.library.cinnamonLagomProjection,
     // Uncomment if you are using the Prometheus backend.
     // See https://developer.lightbend.com/docs/telemetry/current/sandbox/prometheus-sandbox.html
-//    Cinnamon.library.cinnamonPrometheus,
-//    Cinnamon.library.cinnamonPrometheusHttpServer
+    Cinnamon.library.cinnamonPrometheus,
+    Cinnamon.library.cinnamonPrometheusHttpServer
   )
 )
 
@@ -118,7 +117,7 @@ def dockerSettings = Seq(
 
 def getDockerBaseImage(): String = sys.props.get("java.version") match {
   case Some(v) if v.startsWith("11") => "adoptopenjdk/openjdk11"
-  case _ => "adoptopenjdk/openjdk8"
+  case _                             => "adoptopenjdk/openjdk8"
 }
 
 // The project uses PostgreSQL
