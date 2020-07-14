@@ -9,7 +9,10 @@ import com.example.shoppingcart.impl.ShoppingCart._
 
 import scala.util.Random
 
-class ShoppingCartReportProcessor(readSide: SlickReadSide, repository: ShoppingCartReportRepository)
+import play.api.Mode
+import play.api.Environment
+
+class ShoppingCartReportProcessor(readSide: SlickReadSide, repository: ShoppingCartReportRepository, environment: Environment)
     extends ReadSideProcessor[Event] {
 
   override def buildHandler(): ReadSideProcessor.ReadSideHandler[Event] =
@@ -28,7 +31,7 @@ class ShoppingCartReportProcessor(readSide: SlickReadSide, repository: ShoppingC
       .setEventHandler[CartCheckedOut] { envelope =>
         // This is not part of a real application, but we are adding it here to show
         // how Lightbend Telemetry handles failures on Lagom's read-side processors.
-        if (Random.nextInt(5) == 0) throw new RuntimeException("Sometimes event handling a checkout fails.")
+        if (Random.nextInt(5) == 0 && environment.mode != Mode.Test) throw new RuntimeException("Sometimes event handling a checkout fails.")
         repository.addCheckoutTime(envelope.entityId, envelope.event.eventTime)
       }
       .build()

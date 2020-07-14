@@ -1,0 +1,41 @@
+name: Test Telemetry Samples
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: sbt cache
+        uses: actions/cache@v2
+        env:
+          cache-name: sbt-dependencies-cache
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+            ~/.cache/coursier/v1
+          key: ${{ runner.os }}-sbt-${{ env.cache-name }}
+
+      - name: Install AdoptOpenJDK 11
+        uses: AdoptOpenJDK/install-jdk@v1
+        with:
+          version: "11"
+
+      - name: Start docker-compose services
+        run: |
+          pushd lagom/shopping-cart-scala && docker-compose up -d && popd
+          sleep 30
+
+      - name: Check docker-compose services
+        run: pushd lagom/shopping-cart-scala && docker-compose ps && popd
+
+      - name: Run tests for lagom/shopping-cart-scala
+        run: pushd lagom/shopping-cart-scala && sbt test && popd
+        env:
+          LIGHTBEND_COMMERCIAL_MVN: ${{ secrets.LIGHTBEND_COMMERCIAL_MVN }}
+          LIGHTBEND_COMMERCIAL_IVY: ${{ secrets.LIGHTBEND_COMMERCIAL_IVY }}
