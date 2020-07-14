@@ -69,8 +69,7 @@ sbt stage
 
 ## (optional) Run Prometheus
 
-You can also run the [Telemetry Prometheus developer sandbox](https://developer.lightbend.com/docs/telemetry/current/sandbox/prometheus-sandbox.html). This
-sample includes commented out changes to easily integrate with Prometheus. See `build.sbt` and `./shopping-cart/src/main/resources/cinnamon.conf`.
+You can also run the [Telemetry Prometheus developer sandbox](https://developer.lightbend.com/docs/telemetry/current/sandbox/prometheus-sandbox.html). This sample includes commented out changes to easily integrate with Prometheus. See `build.sbt` and `./shopping-cart/src/main/resources/cinnamon.conf`.
 
 ## Shopping cart service
 
