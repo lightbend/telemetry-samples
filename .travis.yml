@@ -1,0 +1,34 @@
+version: ~> 1.0
+language: scala
+
+env:
+  global:
+    - TRAVIS_JDK=11
+
+before_install:
+  - curl -Ls https://git.io/jabba | bash && . ~/.jabba/jabba.sh
+
+install: jabba install $(jabba ls-remote "adopt@~1.$TRAVIS_JDK.0-0" --latest=patch) && jabba use "$_" && java -Xmx32m -version
+
+cache:
+  directories:
+    - "$HOME/.cache/coursier"
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.m2/repository"
+    - "$HOME/.sbt"
+
+jobs:
+  include:
+    # Lagom samples
+    - stage: test-java-11
+      name: "Test lagom/shopping-cart-scala"
+      script:
+        - docker-compose -f lagom/shopping-cart-scala/docker-compose.yml up -d
+        # Wait a little bit so that all services are up and running
+        - sleep 30s
+        # For debug purpose only
+        - docker-compose logs
+        - "cd lagom/shopping-cart-scala && sbt test"
+
+stages:
+  - test-java-11
