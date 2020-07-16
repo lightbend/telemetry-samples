@@ -1,2 +1,11 @@
-credentials in ThisBuild += Credentials(Path.userHome / ".lightbend" / "commercial.credentials")
-resolvers in ThisBuild += "lightbend-commercial-maven" at "https://repo.lightbend.com/commercial-releases"
+resolvers in ThisBuild ++= {
+    val mvnResolver = sys.env.get("LIGHTBEND_COMMERCIAL_MVN").map { url =>
+        "lightbend-commercial-mvn" at url
+    }
+
+    val ivyResolver = sys.env.get("LIGHTBEND_COMMERCIAL_IVY").map { u =>
+        Resolver.url("lightbend-commercial-ivy", url(u))(Resolver.ivyStylePatterns)
+    }
+
+    (mvnResolver ++ ivyResolver).toList
+}
