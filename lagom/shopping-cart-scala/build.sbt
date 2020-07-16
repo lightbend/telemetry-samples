@@ -15,10 +15,15 @@ ThisBuild / scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-featur
 
 def dockerSettings = Seq(
   dockerUpdateLatest := true,
-  dockerBaseImage := "adoptopenjdk/openjdk8",
+  dockerBaseImage := getDockerBaseImage(),
   dockerUsername := sys.props.get("docker.username"),
   dockerRepository := sys.props.get("docker.registry")
 )
+
+def getDockerBaseImage(): String = sys.props.get("java.version") match {
+  case Some(v) if v.startsWith("11") => "adoptopenjdk/openjdk11"
+  case _ => "adoptopenjdk/openjdk8"
+}
 
 // Lightbend Telemetry basic configuration. See more at:
 // https://developer.lightbend.com/docs/telemetry/current/getting-started/lagom_scala.html
