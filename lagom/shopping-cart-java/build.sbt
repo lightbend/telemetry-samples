@@ -1,5 +1,4 @@
 import com.lightbend.lagom.core.LagomVersion
-import play.core.PlayVersion.{ current => playVersion, akkaVersion }
 
 organization in ThisBuild := "com.example"
 
@@ -17,14 +16,14 @@ val hibernateEntityManager = "org.hibernate"                   % "hibernate-enti
 val jpaApi                 = "org.hibernate.javax.persistence" % "hibernate-jpa-2.1-api"   % "1.0.0.Final"
 val validationApi          = "javax.validation"                % "validation-api"          % "1.1.0.Final"
 
-val akkaPersistenceQuery = "com.typesafe.akka" %% "akka-persistence-query" % akkaVersion
-val akkaStreamTestkit    = "com.typesafe.akka" %% "akka-stream-testkit"    % akkaVersion
+val akkaPersistenceQuery = "com.typesafe.akka" %% "akka-persistence-query" % LagomVersion.akka
+val akkaStreamTestkit    = "com.typesafe.akka" %% "akka-stream-testkit"    % LagomVersion.akka
 
 val akkaManagementVersion = "1.0.3"
 val akkaDiscoveryKubernetesApi = "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api"                % akkaManagementVersion
 val lagomJavadslAkkaDiscovery  = "com.lightbend.lagom"          %% "lagom-javadsl-akka-discovery-service-locator" % LagomVersion.current
 
-val playJavaClusterSharding = "com.typesafe.play" %% "play-java-cluster-sharding" % playVersion
+val playJavaClusterSharding = "com.typesafe.play" %% "play-java-cluster-sharding" % LagomVersion.play
 
 lazy val `shopping-cart-java` = (project in file("."))
   .aggregate(`shopping-cart-api`, `shopping-cart`, `inventory-api`, inventory)
@@ -61,7 +60,7 @@ lazy val `shopping-cart` = (project in file("shopping-cart"))
       validationApi
     )
   )
-  .settings(lagomForkedTestSettings: _*)
+  .settings(lagomForkedTestSettings)
   .dependsOn(`shopping-cart-api`)
 
 lazy val `inventory-api` = (project in file("inventory-api"))
