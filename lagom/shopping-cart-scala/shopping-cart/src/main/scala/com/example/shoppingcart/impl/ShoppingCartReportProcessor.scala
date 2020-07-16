@@ -31,6 +31,7 @@ class ShoppingCartReportProcessor(readSide: SlickReadSide, repository: ShoppingC
       .setEventHandler[CartCheckedOut] { envelope =>
         // This is not part of a real application, but we are adding it here to show
         // how Lightbend Telemetry handles failures on Lagom's read-side processors.
+        // Not failing when running tests to that we can have a stable build.
         if (Random.nextInt(5) == 0 && environment.mode != Mode.Test) throw new RuntimeException("Sometimes event handling a checkout fails.")
         repository.addCheckoutTime(envelope.entityId, envelope.event.eventTime)
       }
