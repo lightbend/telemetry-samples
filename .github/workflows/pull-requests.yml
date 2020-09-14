@@ -1,12 +1,10 @@
 name: Validate Pull Requests
 
-on:
-  pull_request:
-    branches: [ master ]
+on: [pull_request]
 
 jobs:
   build:
-    name: Test ${{ matrix.language }} samples
+    name: Test ${{ matrix.language }} Samples
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
