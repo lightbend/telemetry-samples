@@ -10,16 +10,16 @@ version in ThisBuild ~= (_.replace('+', '-'))
 dynver in ThisBuild ~= (_.replace('+', '-'))
 
 val lombok = "org.projectlombok" % "lombok" % "1.18.8"
-val postgresDriver = "org.postgresql" % "postgresql" % "42.2.8"
+val postgresDriver = "org.postgresql" % "postgresql" % "42.2.18"
 val hamcrestLibrary = "org.hamcrest" % "hamcrest-library" % "2.1" % Test
-val hibernateEntityManager = "org.hibernate" % "hibernate-entitymanager" % "5.4.2.Final"
-val jpaApi = "org.hibernate.javax.persistence" % "hibernate-jpa-2.1-api" % "1.0.0.Final"
+val hibernateEntityManager = "org.hibernate" % "hibernate-entitymanager" % "5.4.23.Final"
+val jpaApi = "org.hibernate.javax.persistence" % "hibernate-jpa-2.1-api" % "1.0.2.Final"
 val validationApi = "javax.validation" % "validation-api" % "1.1.0.Final"
 
 val akkaPersistenceQuery = "com.typesafe.akka" %% "akka-persistence-query" % LagomVersion.akka
 val akkaStreamTestkit    = "com.typesafe.akka" %% "akka-stream-testkit"    % LagomVersion.akka
 
-val akkaManagementVersion = "1.0.3"
+val akkaManagementVersion = "1.0.9"
 val akkaDiscoveryKubernetesApi = "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api" % akkaManagementVersion
 val lagomJavadslAkkaDiscovery = "com.lightbend.lagom" %% "lagom-javadsl-akka-discovery-service-locator" % LagomVersion.current
 
