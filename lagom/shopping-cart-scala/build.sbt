@@ -5,10 +5,10 @@ organization in ThisBuild := "com.example"
 // the Scala version that will be used for cross-compiled libraries
 scalaVersion in ThisBuild := "2.13.3"
 
-val postgresDriver             = "org.postgresql"               % "postgresql"                                     % "42.2.8"
-val macwire                    = "com.softwaremill.macwire"     %% "macros"                                        % "2.3.3" % "provided"
-val scalaTest                  = "org.scalatest"                %% "scalatest"                                     % "3.1.2" % Test
-val akkaDiscoveryKubernetesApi = "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api"                 % "1.0.1"
+val postgresDriver             = "org.postgresql"               % "postgresql"                                     % "42.2.18"
+val macwire                    = "com.softwaremill.macwire"     %% "macros"                                        % "2.3.7" % "provided"
+val scalaTest                  = "org.scalatest"                %% "scalatest"                                     % "3.2.2" % Test
+val akkaDiscoveryKubernetesApi = "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api"                 % "1.0.9"
 val lagomScaladslAkkaDiscovery = "com.lightbend.lagom"          %% "lagom-scaladsl-akka-discovery-service-locator" % LagomVersion.current
 
 ThisBuild / scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked", "-Xfatal-warnings")
@@ -28,7 +28,7 @@ def getDockerBaseImage(): String = sys.props.get("java.version") match {
 // Lightbend Telemetry basic configuration. See more at:
 // https://developer.lightbend.com/docs/telemetry/current/getting-started/lagom_scala.html
 val cinnamonSettings = Seq(
-  cinnamon in test := true,
+  cinnamon in test := false,
   libraryDependencies ++= Seq(
     // Use Coda Hale Metrics and Lagom instrumentation
     Cinnamon.library.cinnamonCHMetrics,
