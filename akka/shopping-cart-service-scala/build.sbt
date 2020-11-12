@@ -10,11 +10,14 @@ scalaVersion := "2.13.3"
 Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint")
 Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
 
+// We are not forking the process anymore becuse of Cinnamon, so we need to
+// passthrough the config.resource to the forket process.
+javaOptions ++= sys.props.get("config.resource").map(r => s"-Dconfig.resource=$r")
+
 Test / parallelExecution := false
 Test / testOptions += Tests.Argument("-oDF")
 Test / logBuffered := false
 
-run / fork := false
 Global / cancelable := false // ctrl-c
 
 val AkkaVersion = "2.6.10"
@@ -24,7 +27,7 @@ val AkkaPersistenceCassandraVersion = "1.0.4"
 val AlpakkaKafkaVersion = "2.0.5"
 val AkkaProjectionVersion = "1.0.0"
 
-enablePlugins(AkkaGrpcPlugin)
+enablePlugins(AkkaGrpcPlugin, Cinnamon)
 
 libraryDependencies ++= Seq(
   // 1. Basic dependencies for a clustered application
@@ -64,4 +67,22 @@ libraryDependencies ++= Seq(
   "com.lightbend.akka" %% "akka-projection-testkit" % AkkaProjectionVersion % Test,
 )
 
+cinnamon in run := true
+cinnamon in test := true
+cinnamonLogLevel := "INFO"
 
+libraryDependencies ++= Seq(
+  // Use Coda Hale Metrics
+  Cinnamon.library.cinnamonCHMetrics,
+  // Use Akka instrumentation
+  Cinnamon.library.cinnamonAkka,
+  Cinnamon.library.cinnamonAkkaTyped,
+  Cinnamon.library.cinnamonAkkaPersistence,
+  Cinnamon.library.cinnamonAkkaStream,
+  // Use Akka HTTP instrumentation
+  Cinnamon.library.cinnamonAkkaHttp,
+  // Use Akka Projection Instrumentation
+  Cinnamon.library.cinnamonAkkaProjection,
+  Cinnamon.library.cinnamonPrometheus,
+  Cinnamon.library.cinnamonPrometheusHttpServer
+)
