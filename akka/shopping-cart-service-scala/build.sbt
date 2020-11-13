@@ -5,7 +5,7 @@ organization := "com.lightbend.akka.samples"
 organizationHomepage := Some(url("https://akka.io"))
 licenses := Seq(("CC0", url("https://creativecommons.org/publicdomain/zero/1.0")))
 
-scalaVersion := "2.13.3"
+scalaVersion := "2.12.12"
 
 Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint")
 Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
@@ -26,8 +26,9 @@ val AkkaManagementVersion = "1.0.9"
 val AkkaPersistenceCassandraVersion = "1.0.4"
 val AlpakkaKafkaVersion = "2.0.5"
 val AkkaProjectionVersion = "1.0.0"
+val GatlingVersion = "3.4.1"
 
-enablePlugins(AkkaGrpcPlugin, Cinnamon)
+enablePlugins(AkkaGrpcPlugin, Cinnamon, GatlingPlugin)
 
 libraryDependencies ++= Seq(
   // 1. Basic dependencies for a clustered application
@@ -85,4 +86,24 @@ libraryDependencies ++= Seq(
   Cinnamon.library.cinnamonAkkaProjection,
   Cinnamon.library.cinnamonPrometheus,
   Cinnamon.library.cinnamonPrometheusHttpServer
+)
+
+libraryDependencies ++= Seq(
+  "io.gatling.highcharts" % "gatling-charts-highcharts" % GatlingVersion % Test,
+  "io.gatling"            % "gatling-test-framework"    % GatlingVersion % Test,
+  "com.github.phisgr"    %% "gatling-grpc"              % "0.10.1"       % Test,
+)
+
+// To avoid a dependency conflict when running gatling tests
+val JacksonVersion = "2.10.5"
+dependencyOverrides ++= Seq(
+  "com.fasterxml.jackson.core" % "jackson-annotations" % JacksonVersion,
+  "com.fasterxml.jackson.core" % "jackson-core" % JacksonVersion,
+  "com.fasterxml.jackson.core" % "jackson-databind" % JacksonVersion,
+  "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % JacksonVersion,
+  "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % JacksonVersion,
+  "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % JacksonVersion,
+  "com.fasterxml.jackson.module" % "jackson-module-parameter-names" % JacksonVersion,
+  "com.fasterxml.jackson.module" % "jackson-module-paranamer" % JacksonVersion,
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % JacksonVersion,
 )

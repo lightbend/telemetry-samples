@@ -32,7 +32,7 @@ class ShoppingCartServiceImpl(
   private val sharding = ClusterSharding(system)
 
   override def addItem(in: proto.AddItemRequest): Future[proto.Cart] = {
-    logger.info("addItem {} to cart {}", in.itemId, in.cartId)
+    logger.info(s"addItem ${in.itemId} to cart ${in.cartId}")
     val entityRef = sharding.entityRefFor(ShoppingCart.EntityKey, in.cartId)
     val reply: Future[ShoppingCart.Summary] =
       entityRef.askWithStatus(ShoppingCart.AddItem(in.itemId, in.quantity, _))
@@ -41,7 +41,7 @@ class ShoppingCartServiceImpl(
   }
 
   override def updateItem(in: proto.UpdateItemRequest): Future[proto.Cart] = {
-    logger.info("updateItem {} to cart {}", in.itemId, in.cartId)
+    logger.info(s"updateItem ${in.itemId} to cart ${in.cartId}")
     val entityRef = sharding.entityRefFor(ShoppingCart.EntityKey, in.cartId)
 
     def command(replyTo: ActorRef[StatusReply[ShoppingCart.Summary]]) =
