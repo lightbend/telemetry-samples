@@ -33,6 +33,12 @@ jobs:
         name: Install AdoptOpenJDK 11
         with:
           version: "11"
+      - name: Start docker-compose services for akka/shopping-cart-service-${{ matrix.language }}
+        run: |
+          pushd akka/shopping-cart-service-${{ matrix.language }} && docker-compose up -d && popd
+          sleep 30
+      - name: Check docker-compose services for akka/shopping-cart-service-${{ matrix.language }}
+        run: pushd akka/shopping-cart-service-${{ matrix.language }} && docker-compose ps && popd
       - name: Run tests
         run: pushd akka/shopping-cart-service-${{ matrix.language }} && sbt test && popd
 
