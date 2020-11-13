@@ -20,6 +20,10 @@ Test / logBuffered := false
 
 Global / cancelable := false // ctrl-c
 
+// This allow the generation of gRPC's native method descriptors
+// that can be consumed in tests
+akkaGrpcCodeGeneratorSettings += "grpc"
+
 val AkkaVersion = "2.6.10"
 val AkkaHttpVersion = "10.2.1"
 val AkkaManagementVersion = "1.0.9"
@@ -27,6 +31,9 @@ val AkkaPersistenceCassandraVersion = "1.0.4"
 val AlpakkaKafkaVersion = "2.0.5"
 val AkkaProjectionVersion = "1.0.0"
 val GatlingVersion = "3.4.1"
+val GatlingGrpcVersion = "0.10.1"
+
+import scalapb.compiler.Version.{ scalapbVersion => ScalaPbVersion }
 
 enablePlugins(AkkaGrpcPlugin, Cinnamon, GatlingPlugin)
 
@@ -89,9 +96,10 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "io.gatling.highcharts" % "gatling-charts-highcharts" % GatlingVersion % Test,
-  "io.gatling"            % "gatling-test-framework"    % GatlingVersion % Test,
-  "com.github.phisgr"    %% "gatling-grpc"              % "0.10.1"       % Test,
+  "com.thesamet.scalapb" %% "scalapb-runtime-grpc"      % ScalaPbVersion,
+  "io.gatling.highcharts" % "gatling-charts-highcharts" % GatlingVersion     % Test,
+  "io.gatling"            % "gatling-test-framework"    % GatlingVersion     % Test,
+  "com.github.phisgr"    %% "gatling-grpc"              % GatlingGrpcVersion % Test,
 )
 
 // To avoid a dependency conflict when running gatling tests
