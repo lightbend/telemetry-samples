@@ -132,6 +132,6 @@ class ShoppingCartSimulation extends Simulation {
       .exec(checkoutCart)
   }
 
-  setUp(shoppingCartScenario.inject(rampUsers(1).during(1.seconds)))
+  setUp(shoppingCartScenario.inject(rampUsers(5000).during(100.seconds)))
     .protocols(grpcProtocol)
 }
