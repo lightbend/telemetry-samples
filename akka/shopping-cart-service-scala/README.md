@@ -83,3 +83,11 @@ This is based on the sample code from [Akka Platform Guide](https://github.com/a
     ```shell
     sbt test
     ```
+
+## How to run Gatling tests
+
+To run gatling tests, start the service as described above, and then run the following command:
+
+```shell
+sbt gatling:test
+```
