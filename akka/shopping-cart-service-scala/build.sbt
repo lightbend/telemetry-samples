@@ -10,8 +10,8 @@ scalaVersion := "2.12.12"
 Compile / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint")
 Compile / javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
 
-// We are not forking the process anymore becuse of Cinnamon, so we need to
-// passthrough the config.resource to the forket process.
+// We are now forking the process because of Cinnamon, so we need to
+// passthrough the config.resource to the forked process.
 javaOptions ++= sys.props.get("config.resource").map(r => s"-Dconfig.resource=$r")
 
 Test / parallelExecution := false
