@@ -256,7 +256,7 @@ class IntegrationSpec
       eventually(PatienceConfiguration.Timeout(15.seconds)) {
         systems3.foreach { sys =>
           Cluster(sys).selfMember.status should ===(MemberStatus.Up)
-          Cluster(sys).state.members.unsorted.map(_.status) should ===(
+          Cluster(sys).state.members.map(_.status) should ===(
             Set(MemberStatus.Up))
         }
       }

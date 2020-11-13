@@ -54,10 +54,8 @@ class ItemPopularityProjectionHandler(
   private def logItemCount(itemId: String): Unit = {
     repo.getItem(itemId).foreach { optCount =>
       log.info(
-        "ItemPopularityProjectionHandler({}) item popularity for '{}': [{}]",
-        tag,
-        itemId,
-        optCount.getOrElse(0))
+        s"ItemPopularityProjectionHandler(${tag}) item popularity for '${itemId}': [${optCount.getOrElse(0)}]"
+      )
     }
   }
 
