@@ -47,6 +47,8 @@ jobs:
         run: pushd akka/shopping-cart-service-${{ matrix.language }} && docker-compose ps && popd
       - name: Run tests
         run: pushd akka/shopping-cart-service-${{ matrix.language }} && ${{ matrix.command }} && popd
+      - name: Shutdown docker-compose services for akka/shopping-cart-service-${{ matrix.language }}
+        run: pushd akka/shopping-cart-service-${{ matrix.language }} && docker-compose down && popd
 
   lagom-samples:
     name: Test lagom/shopping-cart-${{ matrix.language }}
