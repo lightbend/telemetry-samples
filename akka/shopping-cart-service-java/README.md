@@ -87,5 +87,5 @@ This is based on the sample code from [Akka Platform Guide](https://github.com/a
 2. Run the following command:
 
     ```shell
-    mvn package test
+    mvn test
     ```
