@@ -16,19 +16,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [scala]
+        include:
+          - language: java
+            command: mvn package test
+          - language: scala
+            command: sbt test
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
-        name: sbt cache
+        name: ${{ matrix.command }} cache
         env:
           cache-name: akka-dependencies-cache
         with:
           path: |
+            ~/.m2
             ~/.ivy2/cache
             ~/.sbt
             ~/.cache/coursier/v1
-          key: ${{ runner.os }}-sbt-${{ env.cache-name }}
+          key: ${{ runner.os }}-${{ matrix.command }}-${{ env.cache-name }}
       - uses: AdoptOpenJDK/install-jdk@v1
         name: Install AdoptOpenJDK 11
         with:
@@ -40,7 +46,7 @@ jobs:
       - name: Check docker-compose services for akka/shopping-cart-service-${{ matrix.language }}
         run: pushd akka/shopping-cart-service-${{ matrix.language }} && docker-compose ps && popd
       - name: Run tests
-        run: pushd akka/shopping-cart-service-${{ matrix.language }} && sbt test && popd
+        run: pushd akka/shopping-cart-service-${{ matrix.language }} && ${{ matrix.command }} && popd
 
   lagom-samples:
     name: Test lagom/shopping-cart-${{ matrix.language }}
