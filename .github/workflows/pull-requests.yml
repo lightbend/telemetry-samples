@@ -1,4 +1,4 @@
-name: Validate Pull Requests
+name: PR Validation
 
 on:
   pull_request:
@@ -10,78 +10,48 @@ env:
 
 jobs:
 
-  akka-samples:
-    name: Test akka/shopping-cart-service-${{ matrix.language }}
+  validate-samples:
+    name: ${{ matrix.framework }}/${{ matrix.language }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
           - language: java
+            framework: akka
             command: mvn --no-transfer-progress package test
           - language: scala
+            framework: akka
             command: sbt test
-
+          - language: java
+            framework: lagom
+            command: sbt test
+          - language: scala
+            framework: lagom
+            command: sbt test
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
-        name: ${{ matrix.command }} cache
         env:
-          cache-name: akka-dependencies-cache
+          cache-name: ${{ matrix.framework }}-dependencies-cache-${{ matrix.language }}
         with:
           path: |
             ~/.m2
             ~/.ivy2/cache
             ~/.sbt
             ~/.cache/coursier/v1
-          key: ${{ runner.os }}-${{ matrix.command }}-${{ env.cache-name }}
+          key: ${{ runner.os }}-${{ matrix.framework }}-${{ env.cache-name }}
       - uses: AdoptOpenJDK/install-jdk@v1
         name: Install AdoptOpenJDK 11
         with:
           version: "11"
-      - name: Start docker-compose services for akka/shopping-cart-service-${{ matrix.language }}
+      - name: docker-compose up
         run: |
-          pushd akka/shopping-cart-service-${{ matrix.language }} && docker-compose up -d && popd
+          pushd ${{ matrix.framework }}/shopping-cart-${{ matrix.language }} && docker-compose up -d && popd
           sleep 30
-      - name: Check docker-compose services for akka/shopping-cart-service-${{ matrix.language }}
-        run: pushd akka/shopping-cart-service-${{ matrix.language }} && docker-compose ps && popd
-      - name: Run tests
-        run: pushd akka/shopping-cart-service-${{ matrix.language }} && ${{ matrix.command }} && popd
-      - name: Shutdown docker-compose services for akka/shopping-cart-service-${{ matrix.language }}
-        run: pushd akka/shopping-cart-service-${{ matrix.language }} && docker-compose down && popd
-
-  lagom-samples:
-    name: Test lagom/shopping-cart-${{ matrix.language }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [java, scala]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        name: sbt cache
-        env:
-          cache-name: lagom-dependencies-cache
-        with:
-          path: |
-            ~/.ivy2/cache
-            ~/.sbt
-            ~/.cache/coursier/v1
-          key: ${{ runner.os }}-sbt-${{ env.cache-name }}
-
-      - uses: AdoptOpenJDK/install-jdk@v1
-        name: Install AdoptOpenJDK 11
-        with:
-          version: "11"
-
-      - name: Start docker-compose services for lagom/shopping-cart-${{ matrix.language }}
-        run: |
-          pushd lagom/shopping-cart-${{ matrix.language }} && docker-compose up -d && popd
-          sleep 30
-      - name: Check docker-compose services for lagom/shopping-cart-${{ matrix.language }}
-        run: pushd lagom/shopping-cart-${{ matrix.language }} && docker-compose ps && popd
-      - name: Run tests for lagom/shopping-cart-${{ matrix.language }}
-        run: pushd lagom/shopping-cart-${{ matrix.language }} && sbt test && popd
-      - name: Shutdown docker-compose services for lagom/shopping-cart-${{ matrix.language }}
-        run: pushd lagom/shopping-cart-${{ matrix.language }} && docker-compose down && popd
+      - name: docker-compose ps
+        run: pushd ${{ matrix.framework }}/shopping-cart-${{ matrix.language }} && docker-compose ps && popd
+      - name: Run ${{ matrix.command }}
+        run: pushd ${{ matrix.framework }}/shopping-cart-${{ matrix.language }} && ${{ matrix.command }} && popd
+      - name: docker-compose down
+        run: pushd ${{ matrix.framework }}/shopping-cart-${{ matrix.language }} && docker-compose down && popd
