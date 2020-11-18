@@ -33,8 +33,7 @@ This is based on the sample code from [Akka Platform Guide](https://github.com/a
 3. Make sure you have packaged the project
 
     ```shell
-    # No need to run the tests when packaging
-    mvn package -DskipTests
+    mvn compile
     ```
 
 4. Start a first node:
