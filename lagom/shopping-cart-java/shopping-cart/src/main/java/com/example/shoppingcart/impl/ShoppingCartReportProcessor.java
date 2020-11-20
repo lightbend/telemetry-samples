@@ -11,21 +11,15 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import java.util.Random;
-
-import play.Environment;
 
 public class ShoppingCartReportProcessor extends ReadSideProcessor<ShoppingCartEntity.Event> {
 
+    private final JpaReadSide jpaReadSide;
     final private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final JpaReadSide jpaReadSide;
-    private final Environment environment;
-
     @Inject
-    public ShoppingCartReportProcessor(JpaReadSide jpaReadSide, Environment environment) {
+    public ShoppingCartReportProcessor(JpaReadSide jpaReadSide) {
         this.jpaReadSide = jpaReadSide;
-        this.environment = environment;
     }
 
     @Override
@@ -51,16 +45,8 @@ public class ShoppingCartReportProcessor extends ReadSideProcessor<ShoppingCartE
         }
     }
 
-    Random random = new Random();
-
     private void addCheckoutTime(EntityManager entityManager, ShoppingCartEntity.CheckedOut evt) {
         ShoppingCartReport report = findReport(entityManager, evt.shoppingCartId);
-
-        // This is not part of a real application, but we are adding it here to show
-        // how Lightbend Telemetry handles failures on Lagom's read-side processors.
-        // Not failing when running tests to that we can have a stable build.
-        if (random.nextInt(5) == 0 && !environment.isTest())
-            throw new RuntimeException("Sometimes event handling a checkout fails.");
 
         logger.debug("Received CheckedOut event: " + evt);
         if (report != null) {
