@@ -37,6 +37,14 @@
         </profile>
     </profiles>
 
+    <repositories>
+        <repository>
+            <id>lightbend-commercial</id>
+            <name>Lightbend Commercial</name>
+            <url>${env.LIGHTBEND_COMMERCIAL_MVN}</url>
+        </repository>
+    </repositories>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -134,6 +142,66 @@
                     <generateGitPropertiesFile>false</generateGitPropertiesFile>
                 </configuration>
             </plugin>
+
+            <!-- Copy Lightbend Telemetry jar to a be used later -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.lightbend.cinnamon</groupId>
+                                    <artifactId>cinnamon-agent</artifactId>
+                                    <version>${lightbend.cinnamon.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <destFileName>cinnamon-agent.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Use agent when running the application -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <executable>java</executable>
+                    <!--
+                    We are gonna skip it for the main project, but it is
+                    configured to run for the implementation subprojects.
+                    -->
+                    <skip>true</skip>
+                    <arguments>
+                        <argument>-javaagent:${project.build.directory}/dependency/cinnamon-agent.jar</argument>
+                        <argument>-Djava.library.path=target/lib</argument>
+                        <argument>-classpath</argument>
+                        <classpath />
+                        <argument>-Dplay.server.http.port=${play.server.http.port}</argument>
+                        <argument>play.core.server.ProdServerStart</argument>
+                    </arguments>x
+                </configuration>
+            </plugin>
+
+            <!-- Use agent when running the tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <argLine>-javaagent:${project.build.directory}/dependency/cinnamon-agent.jar</argLine>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -206,6 +274,7 @@
         <scala.binary.version>2.13</scala.binary.version>
         <akka.management.version>1.0.9</akka.management.version>
         <hamcrest.version>2.1</hamcrest.version>
+        <lightbend.cinnamon.version>2.15.0-20201030-1152075</lightbend.cinnamon.version>
         <version.number>${git.commit.time}.${git.commit.id.abbrev}</version.number>
 
         <!--
@@ -216,5 +285,7 @@
         <lagom.jdk.source>1.8</lagom.jdk.source>
         <lagom.jdk.target>1.8</lagom.jdk.target>
         <lagom.docker.image>adoptopenjdk/openjdk8</lagom.docker.image>
+
+        <play.server.http.port>9000</play.server.http.port>
     </properties>
 </project>
