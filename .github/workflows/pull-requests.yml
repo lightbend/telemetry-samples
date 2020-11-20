@@ -11,7 +11,7 @@ env:
 jobs:
 
   validate-samples:
-    name: ${{ matrix.framework }}/${{ matrix.language }}
+    name: ${{ matrix.framework }} / ${{ matrix.language }} / ${{ matrix.buildtool }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -19,16 +19,19 @@ jobs:
         include:
           - language: java
             framework: akka
-            command: mvn --no-transfer-progress package test
+            buildtool: mvn
           - language: scala
             framework: akka
-            command: sbt test
+            buildtool: sbt
           - language: java
             framework: lagom
-            command: sbt test
+            buildtool: sbt
+          - language: java
+            framework: lagom
+            buildtool: mvn
           - language: scala
             framework: lagom
-            command: sbt test
+            buildtool: sbt
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
@@ -51,7 +54,7 @@ jobs:
           sleep 30
       - name: docker-compose ps
         run: pushd ${{ matrix.framework }}/shopping-cart-${{ matrix.language }} && docker-compose ps && popd
-      - name: Run ${{ matrix.command }}
-        run: pushd ${{ matrix.framework }}/shopping-cart-${{ matrix.language }} && ${{ matrix.command }} && popd
+      - name: Run ${{ matrix.buildtool }} test
+        run: pushd ${{ matrix.framework }}/shopping-cart-${{ matrix.language }} && ${{ matrix.buildtool }} test && popd
       - name: docker-compose down
         run: pushd ${{ matrix.framework }}/shopping-cart-${{ matrix.language }} && docker-compose down && popd
