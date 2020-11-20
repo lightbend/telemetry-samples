@@ -13,17 +13,16 @@ import com.lightbend.lagom.scaladsl.server.LagomApplication
 import com.lightbend.lagom.scaladsl.testkit.ReadSideTestDriver
 import com.lightbend.lagom.scaladsl.testkit.ServiceTest
 import com.lightbend.lagom.scaladsl.testkit.TestTopicComponents
-import org.scalatest.BeforeAndAfterAll
-import org.scalatest.OptionValues
+import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.wordspec.AnyWordSpec
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 class ShoppingCartReportSpec
-    extends AnyWordSpecLike
+    extends AnyWordSpec
     with BeforeAndAfterAll
     with Matchers
     with ScalaFutures

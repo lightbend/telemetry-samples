@@ -1,15 +1,15 @@
-import com.lightbend.lagom.core.LagomVersion
+import com.lightbend.lagom.core.LagomVersion.{ current => lagomVersion }
 
 organization in ThisBuild := "com.example"
 
 // the Scala version that will be used for cross-compiled libraries
 scalaVersion in ThisBuild := "2.13.3"
 
-val postgresDriver             = "org.postgresql"               % "postgresql"                                     % "42.2.18"
+val postgresDriver             = "org.postgresql"                % "postgresql"                                    % "42.2.18"
 val macwire                    = "com.softwaremill.macwire"     %% "macros"                                        % "2.3.7" % "provided"
 val scalaTest                  = "org.scalatest"                %% "scalatest"                                     % "3.2.2" % Test
 val akkaDiscoveryKubernetesApi = "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api"                 % "1.0.9"
-val lagomScaladslAkkaDiscovery = "com.lightbend.lagom"          %% "lagom-scaladsl-akka-discovery-service-locator" % LagomVersion.current
+val lagomScaladslAkkaDiscovery = "com.lightbend.lagom"          %% "lagom-scaladsl-akka-discovery-service-locator" % lagomVersion
 
 ThisBuild / scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked", "-Xfatal-warnings")
 
@@ -22,7 +22,7 @@ def dockerSettings = Seq(
 
 def getDockerBaseImage(): String = sys.props.get("java.version") match {
   case Some(v) if v.startsWith("11") => "adoptopenjdk/openjdk11"
-  case _ => "adoptopenjdk/openjdk8"
+  case _                             => "adoptopenjdk/openjdk8"
 }
 
 // Lightbend Telemetry basic configuration. See more at:
@@ -96,4 +96,9 @@ lazy val inventory = (project in file("inventory"))
   .settings(dockerSettings)
   .dependsOn(`inventory-api`, `shopping-cart-api`)
 
+// The project uses PostgreSQL
 lagomCassandraEnabled in ThisBuild := false
+
+// Use Kafka server running in a docker container
+lagomKafkaEnabled in ThisBuild := false
+lagomKafkaPort in ThisBuild := 9092

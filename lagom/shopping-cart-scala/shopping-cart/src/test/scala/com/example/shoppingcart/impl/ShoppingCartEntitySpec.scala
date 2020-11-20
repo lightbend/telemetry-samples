@@ -12,8 +12,8 @@ class ShoppingCartEntitySpec
                                          |akka.persistence.journal.plugin = "akka.persistence.journal.inmem"
                                          |akka.persistence.snapshot-store.plugin = "akka.persistence.snapshot-store.local"
                                          |akka.persistence.snapshot-store.local.dir = "target/snapshot-${UUID
-                                           .randomUUID()
-                                           .toString}"
+      .randomUUID()
+      .toString}"
                                          |""".stripMargin)
     with AnyWordSpecLike
     with LogCapturing {
