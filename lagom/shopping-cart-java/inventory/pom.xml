@@ -58,6 +58,23 @@
             <groupId>com.lightbend.lagom</groupId>
             <artifactId>lagom-javadsl-akka-discovery-service-locator_${scala.binary.version}</artifactId>
         </dependency>
+
+        <!-- Use Coda Hale Metrics -->
+        <dependency>
+            <groupId>com.lightbend.cinnamon</groupId>
+            <artifactId>cinnamon-chmetrics</artifactId>
+            <version>${lightbend.cinnamon.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.cinnamon</groupId>
+            <artifactId>cinnamon-lagom_${scala.binary.version}</artifactId>
+            <version>${lightbend.cinnamon.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.cinnamon</groupId>
+            <artifactId>cinnamon-lagom-projection_${scala.binary.version}</artifactId>
+            <version>${lightbend.cinnamon.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -93,6 +110,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <executable>java</executable>
+                    <skip>false</skip>
+                </configuration>
             </plugin>
         </plugins>
     </build>

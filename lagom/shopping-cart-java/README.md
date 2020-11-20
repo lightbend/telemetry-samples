@@ -8,14 +8,7 @@ The **inventory service** consumes a stream of events published to Kafka by the 
 
 ## Lightbend Telemetry
 
-This project differs from the original Lagom sample by adding Lightbend Telemetry. To run it, besides the requirements listed below, you will also need [a Lightbend account and Bintray credentials](https://developer.lightbend.com/docs/telemetry/current/home.html). You can either edit `credentials.sbt` file to what is recommended in Lightbend Telemetry documentation, or set environment variables using:
-
-```bash
-export LIGHTBEND_COMMERCIAL_MVN="<the-url-you-will-get-for-your-lightbend-account>"
-export LIGHTBEND_COMMERCIAL_IVY="<the-url-you-will-get-for-your-lightbend-account>"
-```
-
-And `credentials.sbt` will read these environment variables.
+Details about Lightbend Telemetry are documented in [TELEMETRY.md](TELEMETRY.md).
 
 ## Requirements
 

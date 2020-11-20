@@ -115,8 +115,8 @@ val cinnamonSettings = Seq(
     Cinnamon.library.cinnamonLagomProjection,
     // Uncomment if you are using the Prometheus backend.
     // See https://developer.lightbend.com/docs/telemetry/current/sandbox/prometheus-sandbox.html
-    Cinnamon.library.cinnamonPrometheus,
-    Cinnamon.library.cinnamonPrometheusHttpServer
+    // Cinnamon.library.cinnamonPrometheus,
+    // Cinnamon.library.cinnamonPrometheusHttpServer
   )
 )
 // The project uses PostgreSQL
