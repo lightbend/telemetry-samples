@@ -17,14 +17,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <scala.version>2.13</scala.version>
+        <scala.binary.version>2.13</scala.binary.version>
         <akka.version>2.6.10</akka.version>
-        <akka-http.version>10.2.0</akka-http.version>
+        <akka-http.version>10.2.1</akka-http.version>
         <akka-management.version>1.0.9</akka-management.version>
         <akka-persistence-cassandra.version>1.0.4</akka-persistence-cassandra.version>
         <alpakka-kafka.version>2.0.5</alpakka-kafka.version>
         <akka-projection.version>1.0.0</akka-projection.version>
-        <akka-grpc.version>1.0.1</akka-grpc.version>
+        <akka-grpc.version>1.0.2</akka-grpc.version>
         <lightbend.cinnamon.version>2.15.0-20201030-1152075</lightbend.cinnamon.version>
         <!-- needs to be defined to allow for overriding through mvn exec:exec -DAPP_CONFIG=local1.conf -->
         <APP_CONFIG>application.conf</APP_CONFIG>
@@ -41,97 +41,97 @@
     <dependencies>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-cluster-typed_${scala.version}</artifactId>
+            <artifactId>akka-cluster-typed_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-cluster-sharding-typed_${scala.version}</artifactId>
+            <artifactId>akka-cluster-sharding-typed_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-persistence-typed_${scala.version}</artifactId>
+            <artifactId>akka-persistence-typed_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-persistence-query_${scala.version}</artifactId>
+            <artifactId>akka-persistence-query_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-serialization-jackson_${scala.version}</artifactId>
+            <artifactId>akka-serialization-jackson_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-cluster-tools_${scala.version}</artifactId>
+            <artifactId>akka-cluster-tools_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-discovery_${scala.version}</artifactId>
+            <artifactId>akka-discovery_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-persistence-cassandra_${scala.version}</artifactId>
+            <artifactId>akka-persistence-cassandra_${scala.binary.version}</artifactId>
             <version>${akka-persistence-cassandra.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-persistence-cassandra-launcher_${scala.version}</artifactId>
+            <artifactId>akka-persistence-cassandra-launcher_${scala.binary.version}</artifactId>
             <version>${akka-persistence-cassandra.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-http_${scala.version}</artifactId>
+            <artifactId>akka-http_${scala.binary.version}</artifactId>
             <version>${akka-http.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-http-jackson_${scala.version}</artifactId>
+            <artifactId>akka-http-jackson_${scala.binary.version}</artifactId>
             <version>${akka-http.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-http-spray-json_${scala.version}</artifactId>
+            <artifactId>akka-http-spray-json_${scala.binary.version}</artifactId>
             <version>${akka-http.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-http2-support_${scala.version}</artifactId>
+            <artifactId>akka-http2-support_${scala.binary.version}</artifactId>
             <version>${akka-http.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lightbend.akka</groupId>
-            <artifactId>akka-projection-eventsourced_${scala.version}</artifactId>
+            <artifactId>akka-projection-eventsourced_${scala.binary.version}</artifactId>
             <version>${akka-projection.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lightbend.akka</groupId>
-            <artifactId>akka-projection-cassandra_${scala.version}</artifactId>
+            <artifactId>akka-projection-cassandra_${scala.binary.version}</artifactId>
             <version>${akka-projection.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-stream-kafka_${scala.version}</artifactId>
+            <artifactId>akka-stream-kafka_${scala.binary.version}</artifactId>
             <version>${alpakka-kafka.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lightbend.akka.management</groupId>
-            <artifactId>akka-management-cluster-http_${scala.version}</artifactId>
+            <artifactId>akka-management-cluster-http_${scala.binary.version}</artifactId>
             <version>${akka-management.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lightbend.akka.management</groupId>
-            <artifactId>akka-management-cluster-bootstrap_${scala.version}</artifactId>
+            <artifactId>akka-management-cluster-bootstrap_${scala.binary.version}</artifactId>
             <version>${akka-management.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lightbend.akka.grpc</groupId>
-            <artifactId>akka-grpc-runtime_${scala.version}</artifactId>
+            <artifactId>akka-grpc-runtime_${scala.binary.version}</artifactId>
             <version>${akka-grpc.version}</version>
         </dependency>
 
@@ -143,25 +143,25 @@
 
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-actor-testkit-typed_${scala.version}</artifactId>
+            <artifactId>akka-actor-testkit-typed_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-persistence-testkit_${scala.version}</artifactId>
+            <artifactId>akka-persistence-testkit_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.lightbend.akka</groupId>
-            <artifactId>akka-projection-testkit_${scala.version}</artifactId>
+            <artifactId>akka-projection-testkit_${scala.binary.version}</artifactId>
             <version>${akka-projection.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-stream-testkit_${scala.version}</artifactId>
+            <artifactId>akka-stream-testkit_${scala.binary.version}</artifactId>
             <version>${akka.version}</version>
             <scope>test</scope>
         </dependency>
@@ -175,34 +175,34 @@
         <!-- Use Akka instrumentation -->
         <dependency>
             <groupId>com.lightbend.cinnamon</groupId>
-            <artifactId>cinnamon-akka_${scala.version}</artifactId>
+            <artifactId>cinnamon-akka_${scala.binary.version}</artifactId>
             <version>${lightbend.cinnamon.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lightbend.cinnamon</groupId>
-            <artifactId>cinnamon-akka-typed_${scala.version}</artifactId>
+            <artifactId>cinnamon-akka-typed_${scala.binary.version}</artifactId>
             <version>${lightbend.cinnamon.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lightbend.cinnamon</groupId>
-            <artifactId>cinnamon-akka-persistence_${scala.version}</artifactId>
+            <artifactId>cinnamon-akka-persistence_${scala.binary.version}</artifactId>
             <version>${lightbend.cinnamon.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lightbend.cinnamon</groupId>
-            <artifactId>cinnamon-akka-stream_${scala.version}</artifactId>
+            <artifactId>cinnamon-akka-stream_${scala.binary.version}</artifactId>
             <version>${lightbend.cinnamon.version}</version>
         </dependency>
         <!-- Use Akka HTTP instrumentation -->
         <dependency>
             <groupId>com.lightbend.cinnamon</groupId>
-            <artifactId>cinnamon-akka-http_${scala.version}</artifactId>
+            <artifactId>cinnamon-akka-http_${scala.binary.version}</artifactId>
             <version>${lightbend.cinnamon.version}</version>
         </dependency>
         <!-- Use Akka Projection instrumentation -->
         <dependency>
             <groupId>com.lightbend.cinnamon</groupId>
-            <artifactId>cinnamon-akka-projection_${scala.version}</artifactId>
+            <artifactId>cinnamon-akka-projection_${scala.binary.version}</artifactId>
             <version>${lightbend.cinnamon.version}</version>
         </dependency>
 
