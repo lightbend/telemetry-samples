@@ -274,7 +274,7 @@
         <scala.binary.version>2.13</scala.binary.version>
         <akka.management.version>1.0.9</akka.management.version>
         <hamcrest.version>2.1</hamcrest.version>
-        <lightbend.cinnamon.version>2.15.0-20201030-1152075</lightbend.cinnamon.version>
+        <lightbend.cinnamon.version>2.15.0</lightbend.cinnamon.version>
         <version.number>${git.commit.time}.${git.commit.id.abbrev}</version.number>
 
         <!--
