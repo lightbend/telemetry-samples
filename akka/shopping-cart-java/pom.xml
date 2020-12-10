@@ -25,7 +25,7 @@
         <alpakka-kafka.version>2.0.5</alpakka-kafka.version>
         <akka-projection.version>1.0.0</akka-projection.version>
         <akka-grpc.version>1.0.2</akka-grpc.version>
-        <lightbend.cinnamon.version>2.15.0-20201030-1152075</lightbend.cinnamon.version>
+        <lightbend.cinnamon.version>2.15.0</lightbend.cinnamon.version>
         <!-- needs to be defined to allow for overriding through mvn exec:exec -DAPP_CONFIG=local1.conf -->
         <APP_CONFIG>application.conf</APP_CONFIG>
     </properties>
