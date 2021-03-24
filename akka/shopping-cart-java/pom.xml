@@ -119,7 +119,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.4.13.Final</version>
+            <version>5.4.30.Final</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
