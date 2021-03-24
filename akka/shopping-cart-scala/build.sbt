@@ -122,7 +122,7 @@ libraryDependencies ++= Seq(
 )
 
 // To avoid a dependency conflict when running gatling tests
-val JacksonVersion = "2.10.5"
+val JacksonVersion = "2.11.4"
 dependencyOverrides ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-annotations" % JacksonVersion,
   "com.fasterxml.jackson.core" % "jackson-core" % JacksonVersion,
