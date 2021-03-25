@@ -12,7 +12,8 @@ function copy_files {
     # --executability preserve executability
     # --times preserve times
     # --stats give some file-transfer stats
-    rsync -v -r -p -h --progress --executability --times --stats "$from" "$to"
+    # --delete delete extraneous files from dest dirs
+    rsync -v -r -p -h --progress --executability --times --stats --delete "$from" "$to"
 }
 
 function sync_sample {

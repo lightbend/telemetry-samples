@@ -237,7 +237,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.8</version>
+                <version>1.18.18</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -285,7 +285,5 @@
         <lagom.jdk.source>1.8</lagom.jdk.source>
         <lagom.jdk.target>1.8</lagom.jdk.target>
         <lagom.docker.image>adoptopenjdk/openjdk8</lagom.docker.image>
-
-        <play.server.http.port>9000</play.server.http.port>
     </properties>
 </project>

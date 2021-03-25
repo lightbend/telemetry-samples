@@ -32,8 +32,10 @@ class PublishEventsProjectionHandler(
     val producerRecord = new ProducerRecord(topic, key, serialize(event)) // <2>
     val result = sendProducer.send(producerRecord).map { recordMetadata =>
       log.info(
-        s"Published event [${event}] to topic/partition ${topic}/${recordMetadata.partition}"
-      )
+        "Published event [{}] to topic/partition {}/{}",
+        event,
+        topic,
+        recordMetadata.partition)
       Done
     }
     result
