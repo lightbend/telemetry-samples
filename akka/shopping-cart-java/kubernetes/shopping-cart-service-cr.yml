@@ -22,4 +22,3 @@ spec:
     credentialsSecret: shopping-cart-service-jdbc-secret
   kafka:
     credentialsSecret: shopping-cart-service-kafka-secret  # <2>
-  prometheusPort: 9001

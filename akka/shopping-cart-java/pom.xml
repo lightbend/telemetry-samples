@@ -17,10 +17,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <akka-platform.version>0.1.2</akka-platform.version>
+        <akka-platform.version>0.1.4</akka-platform.version>
         <akka-grpc-maven-plugin.version>1.1.1</akka-grpc-maven-plugin.version>
         <scala.binary.version>2.13</scala.binary.version>
-        <lightbend.cinnamon.version>2.15.0</lightbend.cinnamon.version>
         <!-- needs to be defined to allow for overriding through mvn exec:exec -DAPP_CONFIG=local1.conf -->
         <APP_CONFIG>application.conf</APP_CONFIG>
         <!-- Version of the Docker image is derived from git commit.
@@ -119,7 +118,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.4.30.Final</version>
+            <version>5.4.13.Final</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -318,7 +317,7 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.34.1</version>
+                <version>0.35.0</version>
                 <configuration>
                     <images>
                         <image>
