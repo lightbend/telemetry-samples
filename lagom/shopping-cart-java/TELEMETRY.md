@@ -28,7 +28,7 @@ Lagom `runAll` sbt command (`lagom:runAll` when using Maven) does not provide a 
 When agent is properly configured, you should see some output like:
 
 ```
-[INFO] [11/20/2020 16:01:19.588] [main-1] [Cinnamon] Agent version 2.15.0-20201030-1152075
+[INFO] [11/20/2020 16:01:19.588] [main-1] [Cinnamon] Agent version 2.15.1
 [INFO] [11/20/2020 16:01:19.869] [main-1] [Cinnamon] Agent found Play version: 2.8.2
 [INFO] [11/20/2020 16:01:19.870] [main-1] [Cinnamon] Agent found Scala version: 2.13.2
 [INFO] [11/20/2020 16:01:19.924] [main-1] [Cinnamon] Agent found Play-AHC-WS version: 2.8.2
