@@ -7,6 +7,7 @@ import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
+import akka.actor.CoordinatedShutdown
 import akka.actor.testkit.typed.scaladsl.ActorTestKit
 import akka.actor.typed.ActorSystem
 import akka.cluster.MemberStatus
@@ -76,8 +77,13 @@ object IntegrationSpec {
       GrpcClientSettings
         .connectToServiceAt("127.0.0.1", grpcPort)(testKit.system)
         .withTls(false)
-    lazy val client: proto.ShoppingCartService =
+    lazy val client: proto.ShoppingCartServiceClient =
       proto.ShoppingCartServiceClient(clientSettings)(testKit.system)
+    CoordinatedShutdown
+      .get(system)
+      .addTask(
+        CoordinatedShutdown.PhaseBeforeServiceUnbind,
+        "close-test-client-for-grpc")(() => client.close());
 
   }
 }
