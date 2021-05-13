@@ -4,6 +4,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import akka.actor.CoordinatedShutdown;
 import akka.actor.testkit.typed.javadsl.ActorTestKit;
 import akka.actor.testkit.typed.javadsl.TestProbe;
 import akka.actor.typed.ActorSystem;
@@ -77,7 +78,7 @@ public class IntegrationTest {
     private final ActorTestKit testKit;
     private final ActorSystem<?> system;
     private final GrpcClientSettings clientSettings;
-    private shopping.cart.proto.ShoppingCartService client = null;
+    private shopping.cart.proto.ShoppingCartServiceClient client = null;
 
     public TestNodeFixture(int grcpPort, List<Integer> managementPorts, int managementPortIndex) {
       testKit =
@@ -93,6 +94,11 @@ public class IntegrationTest {
     public shopping.cart.proto.ShoppingCartService getClient() {
       if (client == null) {
         client = shopping.cart.proto.ShoppingCartServiceClient.create(clientSettings, system);
+        CoordinatedShutdown.get(system)
+            .addTask(
+                CoordinatedShutdown.PhaseBeforeServiceUnbind(),
+                "close-test-client-for-grpc",
+                () -> client.close());
       }
       return client;
     }
@@ -150,7 +156,6 @@ public class IntegrationTest {
 
   @BeforeClass
   public static void setup() throws Exception {
-
     List<InetSocketAddress> inetSocketAddresses =
         CollectionConverters.SeqHasAsJava(
                 SocketUtil.temporaryServerAddresses(6, "127.0.0.1", false))
@@ -174,6 +179,7 @@ public class IntegrationTest {
     CreateTableTestUtils.createTables(transactionManager, testNode1.system);
 
     kafkaTopicProbe = testNode1.testKit.createTestProbe();
+
     orderServiceProbe = testNode1.testKit.createTestProbe();
     // stub of the ShoppingOrderService
     testOrderService =
