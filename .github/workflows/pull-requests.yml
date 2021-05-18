@@ -20,6 +20,9 @@ jobs:
           - language: java
             framework: akka
             buildtool: mvn
+          - language: java
+            framework: akka
+            buildtool: gradle
           - language: scala
             framework: akka
             buildtool: sbt

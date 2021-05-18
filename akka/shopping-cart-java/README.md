@@ -4,7 +4,7 @@ This is based on the sample code from [Akka Platform Guide](https://github.com/a
 
 ## Requirements
 
-- [Maven](https://maven.apache.org/install.html)
+- [Maven](https://maven.apache.org/install.html) or [Gradle](https://gradle.org/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [grpcurl](https://github.com/fullstorydev/grpcurl#installation)
 - [Lightbend account and Bintray credentials](https://developer.lightbend.com/docs/telemetry/current/getting-started/start.html#lightbend-account-and-bintray-credentials)
@@ -27,25 +27,49 @@ This is based on the sample code from [Akka Platform Guide](https://github.com/a
 2. Make sure you have compiled the project
 
     ```shell
+    # When using Maven
     mvn compile 
+    ```
+
+    ```shell
+    # When using Gradle
+    gradle compileJava
     ```
 
 3. Start a first node:
 
     ```shell
+    # When using Maven
     mvn compile exec:exec -DAPP_CONFIG=local1.conf
+    ```
+
+    ```shell
+    # When using Gradle
+    gradle run -DAPP_CONFIG=local1.conf
     ```
 
 4. (Optional) Start another node with different ports:
 
     ```shell
+    # When using Maven
     mvn compile exec:exec -DAPP_CONFIG=local2.conf
+    ```
+
+    ```shell
+    # When using gradle
+    gradle run -DAPP_CONFIG=local2.conf
     ```
 
 5. (Optional) More can be started:
 
     ```shell
+    # When using Maven
     mvn compile exec:exec -DAPP_CONFIG=local3.conf
+    ```
+
+    ```shell
+    # When using Gradle
+    gradle run -DAPP_CONFIG=local3.conf
     ```
 
 6. Check for service readiness
@@ -81,5 +105,11 @@ This is based on the sample code from [Akka Platform Guide](https://github.com/a
 2. Run the following command:
 
     ```shell
+    # When using Maven
     mvn test
+    ```
+
+    ```shell
+    # When using Gradle
+    gradle test
     ```

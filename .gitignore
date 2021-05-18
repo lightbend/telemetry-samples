@@ -1,5 +1,6 @@
 .idea
 target/
+build/
 bin/
 logs
 metals.sbt
@@ -10,3 +11,4 @@ metals.sbt
 .settings
 .classpath
 .factorypath
+.gradle

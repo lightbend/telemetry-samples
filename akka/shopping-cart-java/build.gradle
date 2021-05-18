@@ -1,0 +1,121 @@
+plugins {
+    id "java"
+    id "application"
+    id "com.lightbend.akka.grpc.gradle" version "1.1.1"
+    id "com.bmuschko.docker-java-application" version "7.0.0"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url = uri("${System.env.LIGHTBEND_COMMERCIAL_MVN}")
+    }
+}
+
+// Add the agent to a separate configuration so it
+// doesn't add to the normal class path
+configurations {
+    agent
+}
+
+def ScalaBinaryVersion = "2.13"
+def AkkaPlatformVersion = "0.1.5"
+
+dependencies {
+    // Akka Platform dependencies
+    implementation platform("com.lightbend.akka:akka-platform-dependencies_${ScalaBinaryVersion}:${AkkaPlatformVersion}")
+    agent platform("com.lightbend.akka:akka-platform-dependencies_${ScalaBinaryVersion}:${AkkaPlatformVersion}")
+
+    // Akka dependencies
+    implementation "com.typesafe.akka:akka-cluster-typed_${ScalaBinaryVersion}"
+    implementation "com.typesafe.akka:akka-cluster-sharding-typed_${ScalaBinaryVersion}"
+    implementation "com.typesafe.akka:akka-persistence-typed_${ScalaBinaryVersion}"
+    implementation "com.typesafe.akka:akka-persistence-query_${ScalaBinaryVersion}"
+    implementation "com.typesafe.akka:akka-serialization-jackson_${ScalaBinaryVersion}"
+    implementation "com.typesafe.akka:akka-cluster-tools_${ScalaBinaryVersion}"
+    testImplementation "com.typesafe.akka:akka-actor-testkit-typed_${ScalaBinaryVersion}"
+    testImplementation "com.typesafe.akka:akka-persistence-testkit_${ScalaBinaryVersion}"
+    testImplementation "com.typesafe.akka:akka-stream-testkit_${ScalaBinaryVersion}"
+
+    // Akka Projection dependencies
+    implementation "com.lightbend.akka:akka-projection-eventsourced_${ScalaBinaryVersion}"
+    implementation "com.lightbend.akka:akka-projection-jdbc_${ScalaBinaryVersion}"
+    testImplementation "com.lightbend.akka:akka-projection-testkit_${ScalaBinaryVersion}"
+
+    // Akka Management dependencies
+    implementation "com.lightbend.akka.management:akka-management-cluster-http_${ScalaBinaryVersion}"
+    implementation "com.lightbend.akka.management:akka-management-cluster-bootstrap_${ScalaBinaryVersion}"
+    implementation "com.lightbend.akka.discovery:akka-discovery-kubernetes-api_${ScalaBinaryVersion}"
+
+    // Lightbend Telemetry (Cinnamon) dependencies
+    implementation "com.lightbend.cinnamon:cinnamon-chmetrics"
+    implementation "com.lightbend.cinnamon:cinnamon-akka_${ScalaBinaryVersion}"
+    implementation "com.lightbend.cinnamon:cinnamon-akka-typed_${ScalaBinaryVersion}"
+    implementation "com.lightbend.cinnamon:cinnamon-akka-persistence_${ScalaBinaryVersion}"
+    implementation "com.lightbend.cinnamon:cinnamon-akka-stream_${ScalaBinaryVersion}"
+    implementation "com.lightbend.cinnamon:cinnamon-akka-http_${ScalaBinaryVersion}"
+    implementation "com.lightbend.cinnamon:cinnamon-akka-projection_${ScalaBinaryVersion}"
+
+    // Lightbend Telemetry (Cinnamon) agent
+    agent "com.lightbend.cinnamon:cinnamon-agent"
+
+    // Other Akka dependencies (persistence, alpakka, grpc)
+    implementation "com.lightbend.akka:akka-persistence-jdbc_${ScalaBinaryVersion}"
+    implementation "com.typesafe.akka:akka-stream-kafka_${ScalaBinaryVersion}"
+    implementation "com.lightbend.akka.grpc:akka-grpc-runtime_${ScalaBinaryVersion}"
+
+    // Other app dependencies
+    implementation "org.springframework.data:spring-data-jpa:2.4.1"
+    implementation "org.hibernate:hibernate-entitymanager:5.4.13.Final"
+    implementation "org.postgresql:postgresql:42.2.18"
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+    testImplementation "junit:junit:4.13.1"
+    testImplementation "commons-io:commons-io:2.7"
+}
+
+group = 'com.lightbend.akka.samples'
+version = '1.0'
+description = 'shopping-cart-service'
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+akkaGrpc {
+    generateClient = true
+    generateServer = true
+}
+
+application {
+    mainClass = "shopping.cart.Main"
+}
+
+run.doFirst {
+    jvmArgs "-Dconfig.resource=${System.getProperty('APP_CONFIG')}"
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
+
+test.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
+
+def dockerBuilDir = "${buildDir}/docker/libs"
+def agentJarFilename = "cinnamon-agent.jar"
+
+def copyAgentJar = tasks.register('copyAgentJar') {
+    doLast {
+        copy {
+            from "${configurations.agent.singleFile}"
+            into "${dockerBuilDir}"
+            rename configurations.agent.singleFile.name, agentJarFilename
+        }
+    }
+}
+
+dockerCreateDockerfile.configure { finalizedBy copyAgentJar }
+
+docker {
+    javaApplication {
+        baseImage = "docker.io/library/adoptopenjdk:11-jre-hotspot"
+        mainClassName = "shopping.cart.Main"
+        jvmArgs = ["-javaagent:/libs/cinnamon-agent.jar"]
+    }
+}
