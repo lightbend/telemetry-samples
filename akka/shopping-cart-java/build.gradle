@@ -20,7 +20,7 @@ configurations {
 }
 
 def ScalaBinaryVersion = "2.13"
-def AkkaPlatformVersion = "0.1.5"
+def AkkaPlatformVersion = "0.1.6"
 
 dependencies {
     // Akka Platform dependencies
@@ -54,6 +54,7 @@ dependencies {
     implementation "com.lightbend.cinnamon:cinnamon-akka-typed_${ScalaBinaryVersion}"
     implementation "com.lightbend.cinnamon:cinnamon-akka-persistence_${ScalaBinaryVersion}"
     implementation "com.lightbend.cinnamon:cinnamon-akka-stream_${ScalaBinaryVersion}"
+    implementation "com.lightbend.cinnamon:cinnamon-akka-grpc_${ScalaBinaryVersion}"
     implementation "com.lightbend.cinnamon:cinnamon-akka-http_${ScalaBinaryVersion}"
     implementation "com.lightbend.cinnamon:cinnamon-akka-projection_${ScalaBinaryVersion}"
 

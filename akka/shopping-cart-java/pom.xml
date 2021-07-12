@@ -38,7 +38,7 @@
             <dependency>
                 <groupId>com.lightbend.akka</groupId>
                 <artifactId>akka-platform-dependencies_${scala.binary.version}</artifactId>
-                <version>0.1.5</version>
+                <version>0.1.6</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -178,6 +178,11 @@
         <dependency>
             <groupId>com.lightbend.cinnamon</groupId>
             <artifactId>cinnamon-akka-http_${scala.binary.version}</artifactId>
+        </dependency>
+        <!-- Use Akka gRPC instrumentation -->
+        <dependency>
+            <groupId>com.lightbend.cinnamon</groupId>
+            <artifactId>cinnamon-akka-grpc_${scala.binary.version}</artifactId>
         </dependency>
         <!-- Use Akka Projection instrumentation -->
         <dependency>
