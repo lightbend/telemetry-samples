@@ -1,2 +1,2 @@
 // The Cinnamon Telemetry plugin
-addSbtPlugin("com.lightbend.cinnamon" % "sbt-cinnamon" % "2.15.1")
+addSbtPlugin("com.lightbend.cinnamon" % "sbt-cinnamon" % "2.16.0")
