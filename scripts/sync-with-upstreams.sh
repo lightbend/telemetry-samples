@@ -40,11 +40,3 @@ sync_sample "git@github.com:akka/akka-platform-guide.git" \
 sync_sample "git@github.com:akka/akka-platform-guide.git" \
     "docs-source/docs/modules/microservices-tutorial/examples/shopping-cart-service-java/" \
     "akka/shopping-cart-java"
-
-sync_sample "git@github.com:lagom/lagom-samples.git" \
-    "shopping-cart/shopping-cart-java/" \
-    "lagom/shopping-cart-java"
-
-sync_sample "git@github.com:lagom/lagom-samples.git" \
-    "shopping-cart/shopping-cart-scala/" \
-    "lagom/shopping-cart-scala"

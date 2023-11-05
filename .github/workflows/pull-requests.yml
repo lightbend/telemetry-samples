@@ -26,15 +26,6 @@ jobs:
           - language: scala
             framework: akka
             buildtool: sbt
-          - language: java
-            framework: lagom
-            buildtool: sbt
-          - language: java
-            framework: lagom
-            buildtool: mvn
-          - language: scala
-            framework: lagom
-            buildtool: sbt
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2

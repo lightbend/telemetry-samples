@@ -6,13 +6,12 @@ Lightbend Telemetry provides insight into applications built with [Lightbend tec
 
 ## Samples
 
-This repository contains sample projects that show how to use Lightbend Telemetry together with Akka, and Lagom.
+This repository contains sample projects that show how to use Lightbend Telemetry together with Akka.
 
 ## More Lightbend Samples
 
 * [Akka Platform Guide](https://github.com/akka/akka-platform-guide/)
 * [Akka Samples](https://github.com/akka/akka-samples/)
-* [Lagom Samples](https://github.com/lagom/lagom-samples/)
 
 ## License
 
