@@ -18,10 +18,10 @@ This is based on the sample code from [Akka Platform Guide](https://github.com/a
 
     # creates the tables needed for Akka Persistence
     # as well as the offset store table for Akka Projection
-    docker exec -i shopping-cart-service_postgres-db_1 psql -U shopping-cart -t < ddl-scripts/create_tables.sql
+    docker exec -i shopping-cart-java-postgres-db-1 psql -U shopping-cart -t < ddl-scripts/create_tables.sql
     
     # creates the user defined projection table.
-    docker exec -i shopping-cart-service_postgres-db_1 psql -U shopping-cart -t < ddl-scripts/create_user_tables.sql
+    docker exec -i shopping-cart-java-postgres-db-1 psql -U shopping-cart -t < ddl-scripts/create_user_tables.sql
     ```
 
 2. Make sure you have compiled the project

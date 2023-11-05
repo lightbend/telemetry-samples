@@ -26,7 +26,7 @@ public class Main {
 
   // tag::SendOrderProjection[]
   public static void main(String[] args) {
-    ActorSystem<Void> system = ActorSystem.create(Behaviors.empty(), "ShoppingCartService");
+    ActorSystem<Void> system = ActorSystem.create(Behaviors.empty(), "shopping-cart-service");
     try {
       init(system, orderServiceClient(system));
     } catch (Exception e) {

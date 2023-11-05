@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: shopping-cart-service
+  name: shopping-cart-service
+  namespace: shopping-cart-namespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: shopping-cart-service
+  template:
+    metadata:
+      labels:
+        app: shopping-cart-service
+        actorSystemName: shopping-cart-service
+    spec:
+      containers:
+        - name: shopping-cart-service
+          # use specific image version from docker publish
+          image: shopping-cart-service:latest
+          # these will need to be increased tuned for production environments!
+          resources:
+            limits:
+              memory: "2Gi"
+            requests:
+              memory: "2Gi"
+              cpu: "1000m"
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: management
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 10
+          livenessProbe:
+            httpGet:
+              path: "/alive"
+              port: management
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 20
+          ports:
+            # akka-management and bootstrap
+            - name: management
+              containerPort: 8558
+              protocol: TCP
+            - name: grpc
+              containerPort: 8101
+              protocol: TCP
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: REQUIRED_CONTACT_POINT_NR
+              value: "2"
+            - name: JAVA_TOOL_OPTIONS
+              value: "-XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75"

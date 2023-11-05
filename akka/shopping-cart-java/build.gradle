@@ -1,7 +1,7 @@
 plugins {
     id "java"
     id "application"
-    id "com.lightbend.akka.grpc.gradle" version "1.1.1"
+    id "com.lightbend.akka.grpc.gradle" version "2.3.4"
     id "com.bmuschko.docker-java-application" version "7.0.0"
 }
 
@@ -20,12 +20,12 @@ configurations {
 }
 
 def ScalaBinaryVersion = "2.13"
-def AkkaPlatformVersion = "0.1.6"
+def AkkaPlatformVersion = "23.05.4"
 
 dependencies {
     // Akka Platform dependencies
-    implementation platform("com.lightbend.akka:akka-platform-dependencies_${ScalaBinaryVersion}:${AkkaPlatformVersion}")
-    agent platform("com.lightbend.akka:akka-platform-dependencies_${ScalaBinaryVersion}:${AkkaPlatformVersion}")
+    implementation platform("com.lightbend.akka:akka-dependencies_${ScalaBinaryVersion}:${AkkaPlatformVersion}")
+    agent platform("com.lightbend.akka:akka-dependencies_${ScalaBinaryVersion}:${AkkaPlatformVersion}")
 
     // Akka dependencies
     implementation "com.typesafe.akka:akka-cluster-typed_${ScalaBinaryVersion}"
