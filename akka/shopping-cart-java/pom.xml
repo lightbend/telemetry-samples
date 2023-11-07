@@ -17,7 +17,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <akka-grpc-maven-plugin.version>1.1.1</akka-grpc-maven-plugin.version>
+        <akka-grpc-maven-plugin.version>2.3.4</akka-grpc-maven-plugin.version>
         <scala.binary.version>2.13</scala.binary.version>
         <!-- needs to be defined to allow for overriding through mvn exec:exec -DAPP_CONFIG=local1.conf -->
         <APP_CONFIG>application.conf</APP_CONFIG>
@@ -28,17 +28,23 @@
 
     <repositories>
         <repository>
+            <id>akka-repository</id>
+            <name>Akka library repository</name>
+            <url>https://repo.akka.io/maven</url>
+        </repository>
+        <repository>
             <id>lightbend-commercial</id>
             <name>Lightbend Commercial</name>
             <url>${env.LIGHTBEND_COMMERCIAL_MVN}</url>
         </repository>
     </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.lightbend.akka</groupId>
-                <artifactId>akka-platform-dependencies_${scala.binary.version}</artifactId>
-                <version>0.1.6</version>
+                <artifactId>akka-dependencies_${scala.binary.version}</artifactId>
+                <version>23.05.4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -109,6 +115,10 @@
             <groupId>com.lightbend.akka.grpc</groupId>
             <artifactId>akka-grpc-runtime_${scala.binary.version}</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.lightbend.akka</groupId>
+            <artifactId>akka-diagnostics_${scala.binary.version}</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -128,7 +138,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.11</version>
         </dependency>
 
         <dependency>
@@ -288,11 +298,11 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.4.1</version>
+                <version>2.36.0</version>
                 <configuration>
                     <java>
                         <googleJavaFormat>
-                            <version>1.8</version>
+                            <version>1.10.0</version>
                             <style>GOOGLE</style>
                         </googleJavaFormat>
                     </java>
@@ -321,13 +331,13 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.34.1</version>
+                <version>0.42.0</version>
                 <configuration>
                     <images>
                         <image>
                             <name>%a</name>
                             <build>
-                                <from>docker.io/library/adoptopenjdk:11-jre-hotspot</from>
+                                <from>docker.io/library/eclipse-temurin:17.0.3_7-jre-jammy</from>
                                 <tags>
                                     <tag>${version.number}</tag>
                                 </tags>

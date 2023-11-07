@@ -9,3 +9,9 @@ target/
 *.iml
 
 .DS_Store
+
+
+.metals
+.vscode
+project/bloop
+project/metals.sbt

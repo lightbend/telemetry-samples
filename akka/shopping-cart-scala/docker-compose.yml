@@ -18,9 +18,9 @@ services:
       POSTGRES_USER: shopping-cart
       POSTGRES_PASSWORD: shopping-cart
 
-# See dockerhub for different versions of kafka and zookeeper
-# https://hub.docker.com/r/wurstmeister/kafka/
-# https://hub.docker.com/r/wurstmeister/zookeeper/
+  # See dockerhub for different versions of kafka and zookeeper
+  # https://hub.docker.com/r/wurstmeister/kafka/
+  # https://hub.docker.com/r/wurstmeister/zookeeper/
   zookeeper:
     image: zookeeper:3.6.2
     ports:
@@ -33,8 +33,6 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
   kafka-consumer:
     image: wurstmeister/kafka:2.13-2.7.0

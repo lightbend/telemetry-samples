@@ -6,7 +6,6 @@ on:
 
 env:
   LIGHTBEND_COMMERCIAL_MVN: ${{ secrets.LIGHTBEND_COMMERCIAL_MVN }}
-  LIGHTBEND_COMMERCIAL_IVY: ${{ secrets.LIGHTBEND_COMMERCIAL_IVY }}
 
 jobs:
 
@@ -25,15 +24,6 @@ jobs:
             buildtool: gradle
           - language: scala
             framework: akka
-            buildtool: sbt
-          - language: java
-            framework: lagom
-            buildtool: sbt
-          - language: java
-            framework: lagom
-            buildtool: mvn
-          - language: scala
-            framework: lagom
             buildtool: sbt
     steps:
       - uses: actions/checkout@v2

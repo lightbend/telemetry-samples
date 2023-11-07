@@ -20,7 +20,7 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val system =
-      ActorSystem[Nothing](Behaviors.empty, "ShoppingCartService")
+      ActorSystem[Nothing](Behaviors.empty, "shopping-cart-service")
     try {
       val orderService = orderServiceClient(system)
       init(system, orderService)
