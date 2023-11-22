@@ -20,7 +20,7 @@ configurations {
 }
 
 def ScalaBinaryVersion = "2.13"
-def AkkaPlatformVersion = "23.05.4"
+def AkkaPlatformVersion = "23.10.0"
 
 dependencies {
     // Akka Platform dependencies
