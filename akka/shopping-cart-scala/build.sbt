@@ -47,8 +47,6 @@ dockerUpdateLatest := true
 
 ThisBuild / dynverSeparator := "-"
 
-resolvers += "Akka library repository".at("https://repo.akka.io/maven")
-
 libraryDependencies ++= Seq(
   // 1. Basic dependencies for a clustered application
   "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
