@@ -11,7 +11,7 @@ jobs:
 
   validate-samples:
     name: ${{ matrix.framework }} / ${{ matrix.language }} / ${{ matrix.buildtool }}
-    runs-on: ubuntu-latest
+    runs-on: Akka-Default-Latest
     strategy:
       fail-fast: false
       matrix:
@@ -41,6 +41,8 @@ jobs:
         name: Install AdoptOpenJDK 11
         with:
           version: "11"
+      - name: Run akka/github-actions-scripts
+        uses: akka/github-actions-scripts/setup_global_resolver@main
       - name: docker-compose up
         run: |
           pushd ${{ matrix.framework }}/shopping-cart-${{ matrix.language }} && docker-compose up -d && popd
