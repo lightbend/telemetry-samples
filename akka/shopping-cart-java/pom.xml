@@ -28,11 +28,6 @@
 
     <repositories>
         <repository>
-            <id>akka-repository</id>
-            <name>Akka library repository</name>
-            <url>https://repo.akka.io/maven</url>
-        </repository>
-        <repository>
             <id>lightbend-commercial</id>
             <name>Lightbend Commercial</name>
             <url>${env.LIGHTBEND_COMMERCIAL_MVN}</url>
